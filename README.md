@@ -144,7 +144,7 @@ The remaining two are available for the public. In the Arduino universe SPI2 & S
 
 Its easy. Folder [doc](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/doc) provides the Eagle library file **_yb-esp32-S3-DAC.lbr_** containing the board. Most other PCB design software (e.g. KiCad) are able to import and use Eagle lib files. 
 
-<p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-S3-DAC.jpg" height="250"/>&nbsp;<img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-S3-DAC2.jpg" height="250"/></p> 
+<p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/blob/main/doc/Eagle_project_with_yb-esp32-s3-dac.jpg" height="250"/>&nbsp;<img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/blob/main/doc/Eagle_project_with_yb-esp32-S3-dac2.jpg" height="250"/></p> 
 
 ## Final Remark for first usage:  
 **>>> All YB-ESP32-S3-DAC boards delivered have already been flashed with software example 'Play-All-MP3-Files-on-SD'. <<<**  

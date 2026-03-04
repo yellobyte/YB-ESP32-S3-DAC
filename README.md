@@ -1,5 +1,5 @@
 ## YB-ESP32-S3-DAC Development Board Overview:
-The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32-S3 MCU with **Stereo Headphone** and **Stereo Speaker** output. It features an **ESP32-S3-WROOM-1-N8R2** module (8MB Flash, 2MB PSRAM, WiFi PCB antenna) and is available soon on sales platforms [eBay](https://www.ebay.de/sch/i.html?_nkw=yb-esp32-s3) and [Ricardo.ch](https://www.ricardo.ch/en/s/YB-ESP32-S3).
+The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32-S3 MCU with **Stereo Headphone** and **Stereo Speaker** output. It features an **ESP32-S3-WROOM-1-N8R2** module (8MB Flash, 2MB PSRAM, WiFi PCB antenna) and will be available soon on sales platforms [eBay](https://www.ebay.de/sch/i.html?_nkw=yb-esp32-s3) and [Ricardo.ch](https://www.ricardo.ch/en/s/YB-ESP32-S3).
 
 The board is packed with features. It provides a **Texas Instruments TLV320 Stereo Audio DAC** with audio processing capability and integrated **Stereo Class-D Speaker Amplifier**, **3.5mm Stereo Headset Socket**, **microSD** card slot, **CH334 USB-Hub** chip, **CH343 USB-UART bridge** chip, **USB-C connector** for software upload, serial output and/or feeding power to the board, **two status LEDs** and lots of **GPIO pins** for free use.  
 

@@ -1,0 +1,48 @@
+--- Terminal on COM4 | 115200 8-N-1
+--- Available filters and text transformations: colorize, debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
+--- More details at https://bit.ly/pio-monitor-filters
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+22:56:22.547 > ESP-ROM:esp32s3-20210327
+22:56:22.549 > Build:Mar 27 2021
+22:56:22.549 > rst:0x1 (POWERON),boot:0x28 (SPI_FAST_FLASH_BOOT)
+22:56:22.555 > SPIWP:0xee
+22:56:22.555 > mode:DIO, clock div:1
+22:56:22.555 > load:0x3fce2820,len:0x10cc
+22:56:22.560 > load:0x403c8700,len:0xc2c
+22:56:22.560 > load:0x403cb700,len:0x30c0
+22:56:22.560 > entry 0x403c88b8
+22:56:23.141 > 
+22:56:23.141 > running example "Play-Radio-Station":
+22:56:23.141 > connecting to WiFi network "Moudi-Net"
+22:56:23.181 > .
+22:56:25.191 > connected successfully to "MySSID". IP address: 192.168.1.51
+22:56:25.279 > Init TLV320 DAC
+22:56:25.346 > TLV320 DAC config done!
+22:56:25.346 > info: audioI2S Version 3.4.4c
+22:56:25.366 > E (2240) i2s_common: i2s_channel_disable(1262): the channel has not been enabled yet
+22:56:25.413 > info: inputBufferSize: 655349 bytes
+22:56:25.429 > info: connect to: "stream.laut.fm" on port 80 path "/oldies"
+22:56:25.480 > info: Connection has been established in 50 ms
+22:56:25.481 > lasthost: http://stream.laut.fm/oldies
+22:56:25.578 > info: redirect to new host "http://oldies.stream.laut.fm/oldies?t302=2026-02-25_21-56-24&uuid=638c7285-aca9-4191-a661-f4a88cf26441"
+22:56:25.589 > info: next URL: "http://oldies.stream.laut.fm/oldies?t302=2026-02-25_21-56-24&uuid=638c7285-aca9-4191-a661-f4a88cf26441"
+22:56:25.961 > station_name: Oldies
+22:56:25.961 > icy_url: http://laut.fm/oldies
+22:56:25.961 > icy_description: Oldies - The Music Of Our Generation.
+22:56:25.980 > info: icy-genre:  Oldies
+22:56:25.985 > bitrate: 128000
+22:56:25.985 > info: Bitrate (b/s): 128000
+22:56:25.985 > info: MP3Decoder has been initialized
+22:56:25.991 > info: stream ready
+22:56:25.991 > info: syncword found at pos 329
+22:56:25.996 > info: syncword found at pos 0
+22:56:25.996 > info: MPEG-1 Layer III
+22:56:25.996 > info: Channels: 2
+22:56:26.000 > info: SampleRate (Hz): 44100
+22:56:26.000 > info: BitsPerSample: 16
+22:56:26.015 > info: Stream URL; StreamUrl='0'
+22:56:26.015 > streamtitle: Saga - What Do I Know?
+22:57:58.530 > info: Stream URL; StreamUrl='0'
+22:57:58.530 > streamtitle: The Best Classic Hits on loud fm oldies (1)
+22:58:03.674 > info: Stream URL; StreamUrl='0'
+22:58:03.674 > streamtitle: Enrique Iglesias - Bailamos

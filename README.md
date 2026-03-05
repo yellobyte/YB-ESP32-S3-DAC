@@ -144,7 +144,7 @@ The remaining two are available for the public. In the Arduino universe SPI2 & S
 
 3) The ESP32-S3-WROOM-1 module family comprises several [**versions**](https://github.com/yellobyte/ESP32-DevBoards-Getting-Started/raw/main/ESP32_specs_and_manuals/ESP32-S3-WROOM-1(U)_Variants.jpg). The **-1** versions come with embedded PCB antenna, the **-1U** versions with IPEX antenna socket instead. The extension -Nx(Ry) defines the amount of integrated FLASH/PSRAM, e.g. -N4 (4MB Flash, no PSRAM), -N4R2 (4 MB Flash, 2MB PSRAM), -N8R2 (8 MB Flash, 2MB PSRAM) etc.  
 
-5) The board supports USB Serial JTAG debugging. An example is provided [here](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples/PlatformIO/Debug-via-builtin-JTAG). 
+5) The board supports USB Serial JTAG debugging via ESP32-S3 integrated JTAG circuitry. Look [**here**](https://github.com/yellobyte/ESP32-DevBoards-Getting-Started/tree/main/debugging).
 
 ### Integrating this board into your own PCB design projects:
 

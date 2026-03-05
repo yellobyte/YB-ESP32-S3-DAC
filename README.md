@@ -152,9 +152,7 @@ Its easy. Folder [doc](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/do
 
 <p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-s3-dac.jpg" height="250"/>&nbsp;<img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-s3-dac2.jpg" height="250"/></p> 
 
-## Final Remark for first usage:  
+## Final Remark for first use:  
 **>>> All YB-ESP32-S3-DAC boards delivered have already been flashed with software example 'Play-All-MP3-Files-on-SD'. <<<**  
 
-For a quick board test just insert a microSD card (FAT32) into the socket holding some *.mp3 files, connect one (or two) speaker(s) or a headphone to the board and power it up (via USB or 5V pins).  
-
-The status LED will light up when the microSD card has been detected successfully and the board will start playing all *.mp3 files found.
+For a quick board test just insert a microSD card (FAT32) into the socket holding some *.mp3 files, connect one (or two) speaker(s) or a headphone to the board and power it up (via USB or 5V pins). The status LED will light up when the microSD card has been detected successfully and the board will start playing all *.mp3 files found.

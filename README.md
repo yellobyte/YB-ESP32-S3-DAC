@@ -79,8 +79,6 @@ Just create a new project and give it a name, then go to board selection, enter 
 
  ![](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_PlatformIO_board_selection.jpg)
 
-Examples that need to be build with an older framework still come with a folder "boards" which keeps the necessary *.json board definition files. 
-
 ### Software Upload to the board:
 
 Uploading new software to boards with your IDE is a breeze. Select the correct COM port and upload the program. The integrated hardware logic will put the board into upload mode automatically.

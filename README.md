@@ -97,37 +97,45 @@ However, at any time and if needed you can force the ESP32-S3 into upload mode *
 
 ### Flash/RAM usage:
 
-The -N8R2 module on the board should provide enough memory even for demanding projects. Building e.g. software example [Play-All-MP3-Files-on-SD](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples/ArduinoIDE/Play-All-MP3-Files-on-SD) shows the following Flash/RAM usage:  
+The -N8R2 module on the board provides enough memory even for demanding projects. Building e.g. software example [Play-All-MP3-Files-on-SD](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples/ArduinoIDE/Play-All-MP3-Files-on-SD) shows the following Flash/RAM usage:  
 ```
 Executing task: C:\Users\tj\.platformio\penv\Scripts\platformio.exe run 
 
-Processing v2 (board: yb-esp32-s3-amp-v2; platform: espressif32; framework: arduino)
-------------------------------------------------------------------------------------------------------------------------------------
+Processing release (platform: https://github.com/pioarduino/platform-espressif32/releases/download/stable/platform-espressif32.zip; framework: arduino; board: yb_esp32s3_dac)
+------------------------------------------------------------------------------------------------------------------------
 Verbose mode can be enabled via `-v, --verbose` option
-CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/yb-esp32-s3-amp-v2.html
-PLATFORM: Espressif 32 (6.9.0) > YB-ESP32-S3-AMP (8 MB QD FLASH, 2 MB PSRAM)
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/yb_esp32s3_dac.html
+PLATFORM: Espressif 32 (55.3.37) > YelloByte YB-ESP32-S3-DAC
 HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
 DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
-PACKAGES: 
- - framework-arduinoespressif32 @ 3.20017.0 (2.0.17) 
- - tool-esptoolpy @ 1.40501.0 (4.5.1) 
- - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
- - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+PACKAGES:
+ - contrib-piohome @ 3.4.4
+ - framework-arduinoespressif32 @ 3.3.7
+ - framework-arduinoespressif32-libs @ 5.5.0+sha.87912cd291
+ - tool-esp-rom-elfs @ 2024.10.11
+ - tool-esptoolpy @ 5.1.2
+ - toolchain-xtensa-esp-elf @ 14.2.0+20251107
+*** Applied include path shortening for 336 framework paths ***
+*** Path length reduced from 38684 to ~13910 characters ***
+*** Estimated savings: 24192 characters ***
 LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
 LDF Modes: Finder ~ chain, Compatibility ~ soft
-Found 62 compatible libraries
+Found 47 compatible libraries
 Scanning dependencies...
 Dependency Graph
-|-- SD @ 2.0.0
-|-- ESP32-audioI2S @ 2.0.0
-|-- FS @ 2.0.0
-|-- SPI @ 2.0.0
+|-- SD @ 3.3.7
+|-- Adafruit BusIO @ 1.17.4
+|-- Adafruit TLV320 I2S @ 1.0.0
+|-- TLV320DAC3101 @ 1.1.0
+|-- ESP32-audioI2S @ 3.4.4
+|-- FS @ 3.3.7
+|-- SPI @ 3.3.7
 Building in release mode
-Retrieving maximum program size .pio\build\v2\firmware.elf
-Checking size .pio\build\v2\firmware.elf
+Retrieving maximum program size .pio\build\release\firmware.elf
+Checking size .pio\build\release\firmware.elf
 Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
-RAM:   [=         ]   8.4% (used 27608 bytes from 327680 bytes)
-Flash: [===       ]  28.5% (used 950957 bytes from 3342336 bytes)
+RAM:   [==        ]  18.1% (used 59376 bytes from 327680 bytes)
+Flash: [======    ]  58.7% (used 1963226 bytes from 3342336 bytes)
 ```
 ### General notes:
 

@@ -1,7 +1,7 @@
 /*
   Play-Radio-Station
 
-  Plays a radio station's audio stream. Output goes to speaker and headphone sockets.
+  Play a radio station's audio stream. Output goes to speaker and headphone sockets.
 
   The ESP32-audioI2S Lib predefines the sample frequency of 44100Hz.
 
@@ -76,15 +76,15 @@ void setup()
   }
 
   // activate headphone output and set headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               80)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 80)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
   // activate speaker output and set speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             100)) {              // set volume (allowed range: 0(quiet)...127(loud))
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               100)) {            // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");

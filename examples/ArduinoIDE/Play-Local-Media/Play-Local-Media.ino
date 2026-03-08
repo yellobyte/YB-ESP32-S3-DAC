@@ -45,7 +45,7 @@ void setup()
   Serial.println();
   Serial.println("running example \"Play-Local-Media\":");
 
-  // connecting to local WiFi network
+  // connect to local WiFi network
   Serial.printf("connecting to WiFi network \"%s\"\n", ssid);
   WiFi.begin(ssid, pass);
   while ( WiFi.status() != WL_CONNECTED) {
@@ -70,16 +70,16 @@ void setup()
     halt(dac.getLastError().c_str());
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               90)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 90)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             100)) {              // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               100)) {            // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");

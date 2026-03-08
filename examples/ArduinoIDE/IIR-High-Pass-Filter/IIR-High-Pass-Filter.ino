@@ -18,7 +18,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-07, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -31,9 +31,9 @@ i2s_data_bit_width_t width = I2S_DATA_BIT_WIDTH_16BIT;  // 16bit data/sample wid
 i2s_slot_mode_t      slot  = I2S_SLOT_MODE_STEREO;      // 2 slots (stereo)
 
 // audio definitions for sine tone generation
-#define SAMPLERATE_HZ 32000        // audio sample rate (e.g. 32000, 44100, 48000)
-#define FREQU_MAX     5000         // highest generated frequency
-#define FREQU_MIN     50           // lowest generated frequency
+#define SAMPLERATE_HZ 32000        // Hz, audio sample rate (e.g. 32000, 44100, 48000)
+#define FREQU_MAX     5000         // Hz, highest generated frequency
+#define FREQU_MIN     50           // Hz, lowest generated frequency
 #define FREQU_DELTA   1            // Hz, frequency step
 #define INTERVAL      2            // ms, delay before changing to next frequency
 
@@ -41,7 +41,7 @@ i2s_slot_mode_t      slot  = I2S_SLOT_MODE_STEREO;      // 2 slots (stereo)
 #define FREQU_C       2500         // Hz
 
 float amplitude = ((1<<14)-1);     // amplitude of generated waveform
-int32_t frequency = FREQU_MIN,     // start frequency of generated waveform
+int32_t frequency = FREQU_MIN,     // Hz, start frequency of generated waveform
         maxSamples = (int32_t)(SAMPLERATE_HZ / 1000.0 * INTERVAL),
         fdelta = FREQU_DELTA;
 
@@ -110,7 +110,7 @@ void setup() {
   //cfg.dac_gain_right = 5.0;                  // allowed range: -63.5...+24.0 dB
 
   if (!dac.initDAC(&cfg, false)) {           // set registers but keep DACs powered down
-    halt("Failed to initialize DAC core!");
+    halt(dac.getLastError().c_str());
   }
 
   // PRB_P3 (RC10) contains IIR filtering option
@@ -118,7 +118,7 @@ void setup() {
     halt("Failed to configure Processing Block!");
   }
 
-  // setting parameters for the IIR filter
+  // set parameter for IIR filter
   filter.fc = (float)FREQU_C;                // -3dB corner frequency
   // instead of using the function below one could set filter coefficients manually
   // .N0H = 0x75,
@@ -143,16 +143,16 @@ void setup() {
     halt("Failed to power up DACs!");
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               70)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 70)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               90)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");

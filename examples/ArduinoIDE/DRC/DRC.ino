@@ -1,11 +1,8 @@
 /*
   Play Audio from SD with DRC activated/deactivated
 
-  This example plays all mp3-files from microSD card. Output goes to speaker and headphone sockets.
-  DRC (Dynamic Range Compression) is set and enabled.
-
-  "SD" library is used and requires the cards CS signal (GPIO10), therefore solder bridge
-  SD_CS must be closed [default].
+  This example plays all mp3-files from an attached SD card. Output goes to speaker 
+  and headphone sockets. DRC (Dynamic Range Compression) is set and enabled.
 
   The example accepts the following serial input:
    - d...disable DRC,
@@ -15,12 +12,12 @@
 
   The following libraries are needed:
    - SD
-   - ESP32-audioI2S v3.4.x
+   - ESP32-audioI2S
    - Adafruit_TLV320_I2S
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-07, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -115,7 +112,7 @@ void setup() {
   cfg.dac_gain_right = channelVol;           // allowed range: -63.5...+24.0 dB
 
   if (!dac.initDAC(&cfg, false)) {           // set registers but keep DACs powered down
-    halt("Failed to initialize DAC core!");
+    halt(dac.getLastError().c_str());
   }
 
   // PRB_P2 (RC12) contains DRC filtering option
@@ -123,7 +120,7 @@ void setup() {
     halt("Failed to configure Processing Block!");
   }
 
-  // setting & enabling DRC with some non-standard parameters
+  // set & enable DRC with some non-standard parameters
   drc.hyst = TLV320_DRC_HYST_2DB;
   drc.lpf_coeffs = my_drc_lpf_coeffs;
   drc.hpf_coeffs = my_drc_hpf_coeffs;
@@ -140,16 +137,16 @@ void setup() {
     halt("Failed to power on DACs!");
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               70)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 70)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               90)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");
@@ -166,8 +163,8 @@ void loop() {
   if (!playing) {
     searchAudioFiles();
   }
-  audio.loop();  // play mp3 audio file
-  vTaskDelay(1); // needed by ESP32-audioI2S lib!
+  audio.loop();   // play mp3 audio file
+  vTaskDelay(1);  // needed by ESP32-audioI2S lib!
 
   char buf[10];
   if (Serial.read(buf, sizeof(buf))) {

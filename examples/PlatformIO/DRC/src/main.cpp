@@ -123,7 +123,7 @@ void setup() {
     halt("Failed to configure Processing Block!");
   }
 
-  // setting & enabling DRC with some non-standard parameters
+  // set & enable DRC with some non-standard parameters
   drc.hyst = TLV320_DRC_HYST_2DB;
   drc.lpf_coeffs = my_drc_lpf_coeffs;
   drc.hpf_coeffs = my_drc_hpf_coeffs;
@@ -140,16 +140,16 @@ void setup() {
     halt("Failed to power on DACs!");
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               70)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 70)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               90)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");

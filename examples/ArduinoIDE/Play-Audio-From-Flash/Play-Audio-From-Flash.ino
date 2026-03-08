@@ -53,16 +53,16 @@ void setup() {
     halt(dac.getLastError().c_str());
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // headphone output enabled
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               80)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // headphone output enabled
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 80)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // speaker output enabled
-                             100)) {              // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // speaker output enabled
+                               100)) {            // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");

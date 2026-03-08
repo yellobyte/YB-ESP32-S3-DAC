@@ -10,12 +10,12 @@
 
   The following libraries are needed:
    - SD
-   - ESP32-audioI2S v3.4.x
+   - ESP32-audioI2S
    - Adafruit_TLV320_I2S
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-06, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -107,16 +107,16 @@ void setup() {
     halt(dac.getLastError().c_str());
   }
 
-  // activating headphone output and setting headphone volume
-  if (!dac.initHeadphoneOutput(true,                // enable headphone output
-                               false,               // HP(L/R) output driver acts as headphone driver
-                               100)) {              // set volume (allowed range: 0(quiet)...127(loud))
+  // activate headphone output and set headphone volume
+  if (!dac.configHeadphoneOutput(true,              // enable headphone output
+                                 false,             // HP(L/R) output driver acts as headphone driver
+                                 100)) {            // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure headphone output!");
   }
 
-  // activating speaker output and setting speaker volume
-  if (!dac.initSpeakerOutput(true,                // enable speaker output
-                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
+  // activate speaker output and set speaker volume
+  if (!dac.configSpeakerOutput(true,              // enable speaker output
+                               90)) {             // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");
@@ -130,6 +130,6 @@ void loop() {
   if (!playing) {
     searchAudioFiles();
   }
-  audio.loop();  // play mp3 audio file
-  vTaskDelay(1); // needed by ESP32-audioI2S lib!
+  audio.loop();   // play mp3 audio file
+  vTaskDelay(1);  // needed by ESP32-audioI2S lib!
 }

@@ -4,17 +4,14 @@
   This example plays all mp3-files from microSD card. Output goes to speaker and headphone sockets.
   DRC (Dynamic Range Compression) is set and enabled.
 
-  Since "SD" library is used which requires the cards CS signal (GPIO10) the solder bridge
+  "SD" library is used and requires the cards CS signal (GPIO10), therefore solder bridge
   SD_CS must be closed [default].
 
-  The TLV320 initialization sequence is based on Adafruit_TLV320_I2S lib examples and
-  has been modified to fit the TLV320DAC3101 Stereo Audio DAC.
-
   The example accepts the following serial input:
-   - d...disables DRC,
-   - e...enables DRC,
-   - +/-...increases/decreases volume
-   - a...toggles adaptive mode
+   - d...disable DRC,
+   - e...enable DRC,
+   - +/-...increase/decrease volume
+   - a...toggle adaptive mode
 
   The following libraries are needed:
    - SD
@@ -23,7 +20,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-02-20, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-07, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -33,16 +30,18 @@
 #include "Audio.h"
 #include "TLV320DAC3101.h"
 
-#define MAX_PATH_DEPTH 4
+#define MAX_PATH_DEPTH 4      // directory search depth on SD card
+#define SAMPLERATE_HZ  44100  // predefined by ESP32-audioI2S library
 
 TLV320DAC3101 dac;
 tlv320_drc_param_t drc;
+tlv320_init_config_t cfg;
 Audio audio;
 SPIClass *spi_onboardSD = new SPIClass(FSPI);
 File root, entry;
 std::vector<File> dirChain;
-float channelVol = 10.0;
 bool playing = false;
+float channelVol = 10.0;      // dB, volume setting to start with
 
 // non-standard DRC LPF/HPF coefficients as used in example in Ch. 6.3.10.4.6
 uint8_t my_drc_lpf_coeffs[6] = {0x00, 0x11, 0x00, 0x11, 0x7F, 0xDE};
@@ -90,8 +89,6 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
 
   Serial.begin(115200);
-  delay(100);
-
   Serial.println("\nrunning example \"Play Audio from microSD with DRC activated/deactivated\":");
 
   spi_onboardSD->begin(SCK, MISO, MOSI, SS);
@@ -106,64 +103,19 @@ void setup() {
   root = SD.open("/");
   dirChain.push_back(root);
 
-  // TLV320DAC3101 Audio DAC initialization
+  // HW reset makes sure DAC chip is reset properly
   pinMode(TLV_RESET, OUTPUT);
-  digitalWrite(TLV_RESET, LOW);    // resets the DAC chip
-  delay(100);
+  digitalWrite(TLV_RESET, LOW);
+  delay(10);
   digitalWrite(TLV_RESET, HIGH);
 
-  Serial.println("Init TLV320 DAC");
-  if (!dac.begin()) {
-    halt("Failed to initialize codec!");
-  }
+  // TLV320DAC3101 Audio DAC initialization
+  cfg.sample_frequency = SAMPLERATE_HZ;      // Hz, must be set
+  cfg.dac_gain_left = channelVol;            // dB, defaults to 0dB when not set,
+  cfg.dac_gain_right = channelVol;           // allowed range: -63.5...+24.0 dB
 
-  // I2S Interface Control
-  if (!dac.setCodecInterface(TLV320DAC3100_FORMAT_I2S,       // Format: I2S (Philips standard, default)
-                             TLV320DAC3100_DATA_LEN_16)) {   // Length: 16 bits (default)
-    halt("Failed to configure codec interface!");
-  }
-  // Clock MUX and PLL settings
-  if (!dac.setCodecClockInput(TLV320DAC3100_CODEC_CLKIN_PLL) ||  // PLL output feeds Codec
-      !dac.setPLLClockInput(TLV320DAC3100_PLL_CLKIN_BCLK)) {     // BCLK feeds PLL input
-    halt("Failed to configure codec clocks!");
-  }
-
-  if (!dac.setPLLValues(1, 2, 32, 0)) {      // Configure PLL dividers P, R, J and D
-    halt("Failed to configure PLL values!");
-  }
-
-  if (!dac.setNDAC(true, 4) ||               // Configure DAC dividers NDAC, MDAC and DOSR, for RC>8
-      !dac.setMDAC(true, 4) ||
-      !dac.setDOSR(128)) {
-    Serial.println("Failed to configure DAC dividers!");
-  }
-
-  if (!dac.powerPLL(true)) {                 // Power up the PLL
-    halt("Failed to power up PLL!");
-  }
-
-  // Configure DAC path - power up both left and right DACs
-  if (!dac.setDACDataPath(false, false,                    // DACs not powered up yet
-                          TLV320_DAC_PATH_NORMAL,          // Normal left path
-                          TLV320_DAC_PATH_NORMAL,          // Normal right path
-                          TLV320_VOLUME_STEP_1SAMPLE)) {   // Step: 1 per sample
-    halt("Failed to configure DAC data path!");
-  }
-
-  // Route DAC output to headphone
-  if (!dac.configureAnalogInputs(TLV320_DAC_ROUTE_MIXER,   // Left DAC to mixer
-                                 TLV320_DAC_ROUTE_MIXER,   // Right DAC to mixer
-                                 false, false, false,      // No AIN routing
-                                 false)) {                 // No HPL->HPR
-    halt("Failed to configure DAC routing!");
-  }
-
-  // DAC Volume Control
-  if (!dac.setDACVolumeControl(
-        false, false, TLV320_VOL_INDEPENDENT) ||            // Unmute both channels
-      !dac.setChannelVolume(false, channelVol) ||           // Left DAC +10dB
-      !dac.setChannelVolume(true, channelVol)) {            // Right DAC +10dB
-    halt("Failed to configure DAC volumes!");
+  if (!dac.initDAC(&cfg, false)) {           // set registers but keep DACs powered down
+    halt("Failed to initialize DAC core!");
   }
 
   // PRB_P2 (RC12) contains DRC filtering option
@@ -183,27 +135,21 @@ void setup() {
     halt("Failed to configure DRC!");
   }
 
-  // Power on both DACs
+  // power up both DACs
   if (!dac.powerOnDAC(true, true)) {
     halt("Failed to power on DACs!");
   }
 
-  // Headphone & Speaker Setup
-  if (!dac.configureHeadphoneDriver(
-        true, true,                           // Power up both drivers
-        TLV320_HP_COMMON_1_65V,               // Default common mode
-        false) ||                             // Don't power down on SCD
-      !dac.configureHPL_PGA(0, true) ||       // Set HPL gain, unmute
-      !dac.configureHPR_PGA(0, true) ||       // Set HPR gain, unmute
-      !dac.setHPLVolume(true, 20) ||          // Enable and set HPL volume to -10dB
-      !dac.setHPRVolume(true, 20)) {          // Enable and set HPR volume to -10dB
-    halt("Failed to configure headphone outputs!");
+  // activating headphone output and setting headphone volume
+  if (!dac.initHeadphoneOutput(true,                // enable headphone output
+                               false,               // HP(L/R) output driver acts as headphone driver
+                               70)) {               // set volume (allowed range: 0(quiet)...127(loud))
+    halt("Failed to configure headphone output!");
   }
 
-  if (!dac.enableSpeaker(true) ||                 // Disable/Enable speaker amps
-      !dac.configureSPK_PGA(TLV320_SPK_GAIN_6DB,  // Set gain to 6dB
-                            true) ||              // Unmute
-      !dac.setSPKVolume(true, 20)) {              // Enable and set volume to -10dB
+  // activating speaker output and setting speaker volume
+  if (!dac.initSpeakerOutput(true,                // enable speaker output
+                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");
@@ -212,7 +158,7 @@ void setup() {
   audio.setPinout(I2S_BCLK, I2S_LRCLK, I2S_DOUT);
   audio.setVolume(10); // 0...21(max)
 
-  // The adaptive mode gets enabled with I2S bus active and DACs powered up.
+  // adaptive mode gets enabled with I2S bus active and DACs powered up
   dac.setAdaptiveMode(true);
 }
 
@@ -240,6 +186,7 @@ void loop() {
       Serial.println("DRC disabled");
     }
     else if (*buf == '+') {
+      // increase volume
       channelVol += 1.0;
       if (channelVol > 24.0) channelVol = 24.0;
       if (!dac.setChannelVolume(false, channelVol) ||           // Left DAC
@@ -249,6 +196,7 @@ void loop() {
       Serial.printf("DAC volume now %.1f\n", channelVol);
     }
     else if (*buf == '-') {
+      // decrease volume
       channelVol -= 1.0;
       if (channelVol < -63.0) channelVol = -63.0;
       if (!dac.setChannelVolume(false, channelVol) ||           // Left DAC
@@ -257,13 +205,10 @@ void loop() {
       }
       Serial.printf("DAC volume now %.1f\n", channelVol);
     }
-    else if (*buf == 'a') {           // toggle adaptive mode
+    else if (*buf == 'a') {
+      // toggle adaptive mode
       dac.setAdaptiveMode(!dac.getAdaptiveMode());
       Serial.printf("adaptive mode is switched %s\n", dac.getAdaptiveMode() ? "on" : "off");
     }
   }
 }
-
-
-
-

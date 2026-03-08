@@ -7,7 +7,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-02-20, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-07, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -24,7 +24,6 @@ void setup() {
   Serial.begin(115200);
 
   Serial.println("running example \"Calculate TLV320DAC3101 Filter Coefficients\":");
-  Serial.println();
 
   // IIR (1st order) low pass filter
   #define LPF1_FSAMPLE 44100

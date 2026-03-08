@@ -1,27 +1,27 @@
 /*
   BiQuad Low Pass Filter (of 6th order)
 
-  An ESP32 background thread is feeding the TLV320 with a sine tone sweep 100Hz...5kHz.
+  An ESP32 background thread is feeding the TLV320 with a sine tone sweep 50Hz...5kHz.
   The TLV320DAC3101 Stereo Audio DAC has three BiQuad (2nd order) low pass filters cascaded
-  pro channel. Together they form a low pass filter of 6th order per channel, which has 
-  a much steeper filter curve than a single BiQuad filter alone. Therefore frequencies above 
-  the set corner frequency get strongly attenuated. The audio signal is output on both the 
-  speaker and headphone socket.
-  
-  Processing block PRB_P1 (default) contains 3 BiQuad filter blocks (A, B, C) per channel. 
-  We configure and use all of them. 
-  
+  pro channel. Together they form a low pass filter of 6th order per channel, which has
+  a much steeper filter curve than a single BiQuad filter alone. Therefore frequencies above
+  the set corner frequency get strongly attenuated. Q is chosen differently to keep -3dB
+  attenuation at fc. The audio signal is output on both the speaker and headphone sockets.
+
+  Processing block PRB_P1 (default) contains 3 BiQuad filter blocks (A, B, C) per channel.
+  We configure and use all of them.
+
   The example accepts the following serial input:
-   - d...disables filtering,
-   - e...enables filtering, 
-   - a...toggles adaptive mode
+   - d...disable filtering,
+   - e...enable filtering,
+   - a...toggle adaptive mode
 
   The following additional libraries are needed:
    - Adafruit_TLV320_I2S
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-02-18, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-07, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -41,7 +41,7 @@ i2s_slot_mode_t      slot  = I2S_SLOT_MODE_STEREO;      // 2 slots (stereo)
 #define INTERVAL      2             // ms, delay before changing to next frequency
 #define AMPLITUDE     ((1<<14)-1)   // amplitude of generated waveform
 
-// defines the -3dB corner frequency of the low pass filters
+// defines the -3dB corner frequency of the low pass filter
 #define FREQU_C       1500          // Hz
 
 int32_t frequency = FREQU_MIN,      // start frequency of generated waveform
@@ -52,11 +52,12 @@ int32_t frequency = FREQU_MIN,      // start frequency of generated waveform
 #define WAV_SIZE      8192          // size/points of generated waveform
 int16_t waveform[WAV_SIZE] = {0};
 
-I2SClass  i2s;
+I2SClass i2s;
 TLV320DAC3101 dac;
-tlv320_filter_param_t filter;       // keeps the filter parameters
+tlv320_init_config_t cfg;
+tlv320_filter_param_t filterA, filterB, filterC;  // keep the filter parameters
 
-// Background task continuously feeding I2S bus with sine tone sweep
+// Background task continuously feeding DAC with sine tone sweep
 void backgroundTask(void *parameter) {
   uint16_t pos = 0, delta;
 
@@ -81,7 +82,7 @@ void backgroundTask(void *parameter) {
       fdelta = -fdelta;            // reverse direction
     }
   }
-  vTaskDelete(NULL);               // will never get here  
+  vTaskDelete(NULL);               // will never get here
 }
 
 // helper function to halt on critical errors
@@ -92,7 +93,7 @@ void halt(const char *message) {
 
 void setup() {
   Serial.begin(115200);
-  
+
   Serial.println("\nrunning example \"Low Pass Filter (6th order)\":");
 
   // generate a sine wave signal with defined amplitude in RAM buffer
@@ -101,119 +102,80 @@ void setup() {
   }
   Serial.println("Sine table generated.");
 
-  // TLV320DAC3101 Audio DAC initialization
+  // HW reset makes sure DAC chip is reset properly
   pinMode(TLV_RESET, OUTPUT);
-  digitalWrite(TLV_RESET, LOW);    // resets the DAC chip
-  delay(100);
+  digitalWrite(TLV_RESET, LOW);
+  delay(10);
   digitalWrite(TLV_RESET, HIGH);
 
-  Serial.println("Init TLV320 DAC");
-  if (!dac.begin()) {
-    halt("Failed to initialize codec!");
+  // TLV320DAC3101 Audio DAC initialization
+  cfg.sample_frequency = SAMPLERATE_HZ;      // Hz, must be set
+  //cfg.dac_gain_left = -5.0;                  // dB, defaults to 0dB when not set,
+  //cfg.dac_gain_right = -5.0;                 // allowed range: -63.5...+24.0 dB
+
+  if (!dac.initDAC(&cfg, false)) {           // set registers but keep DACs powered down
+    halt(dac.getLastError().c_str());
   }
 
-  // I2S Interface Control
-  if (!dac.setCodecInterface(TLV320DAC3100_FORMAT_I2S,       // Format: I2S (Philips standard)
-                             TLV320DAC3100_DATA_LEN_16)) {   // Length: 16 bits
-    halt("Failed to configure codec interface!");
-  }
-
-  // Clock MUX and PLL settings
-  if (!dac.setCodecClockInput(TLV320DAC3100_CODEC_CLKIN_PLL) || // PLL output feeds Codec
-      !dac.setPLLClockInput(TLV320DAC3100_PLL_CLKIN_BCLK)) {    // BCLK feeds PLL input
-    halt("Failed to configure codec clocks!");
-  }
-
-  if (!dac.setPLLValues(1, 2, 32, 0)) {      // Configure PLL dividers P, R, J and D
-    halt("Failed to configure PLL values!");
-  }
-
-  if (!dac.setNDAC(true, 4) ||               // Configure DAC dividers NDAC, MDAC and DOSR
-      !dac.setMDAC(true, 4) ||
-      !dac.setDOSR(128)) {
-    Serial.println("Failed to configure DAC dividers!");
-  }
-
-  if (!dac.powerPLL(true)) {                 // Power up the PLL
-    halt("Failed to power up PLL!");
-  }
-
-  // setting filter parameter for a low pass filter
-  filter.fc = (float)FREQU_C;                       // -3dB corner frequency
+  // setting filter parameters for the 3 cascaded filter blocks
+  filterA.fc = filterB.fc = filterC.fc = (float)FREQU_C;  // -3dB corner frequency
+  filterA.Q = 1 / 0.517638;                  // Qs are different, see Readme.md for explanation
+  filterB.Q = 1 / 1.414214;
+  filterC.Q = 1 / 1.931852;
   // instead of using the function below one could set filter coefficients manually
-  // filterA.N0H = 0x7A,
-  // filterB.N0L = 0xF0,
+  // filterA.N0H = 0x7F,
+  // filterA.N0L = 0xFF,
   // ...
-  
-  // calculating coefficients for a Biquad filter block
-  if (!dac.calcDACFilterCoefficients(SAMPLERATE_HZ, TLV320_FILTER_TYPE_LOW_PASS, 
-                                    TLV320_FILTER_BIQUAD, &filter)) {
+
+  // calculate coefficients for Biquad filter blocks
+  if (!dac.calcDACFilterCoefficients(SAMPLERATE_HZ, TLV320_FILTER_TYPE_LOW_PASS,
+                                    TLV320_FILTER_BIQUAD, &filterA) ||
+      !dac.calcDACFilterCoefficients(SAMPLERATE_HZ, TLV320_FILTER_TYPE_LOW_PASS,
+                                    TLV320_FILTER_BIQUAD, &filterB) ||
+      !dac.calcDACFilterCoefficients(SAMPLERATE_HZ, TLV320_FILTER_TYPE_LOW_PASS,
+                                    TLV320_FILTER_BIQUAD, &filterC)) {
     halt("Failed to calculate BiQuad filter coefficients!");
   }
 
   if (!dac.setDACFilter(true,                    // enable filtering
-                        true,                    // on left channel 
+                        true,                    // on left channel
                         true,                    // and on right channel
                         TLV320_FILTER_BIQUAD_A,  // using BiQuadA filter
-                        &filter)) {              // pointer to filter settings
+                        &filterA)) {             // pointer to filter settings
     halt("Failed to set BiQuadA filter!");
   }
 
   if (!dac.setDACFilter(true,                    // enable filtering
-                        true,                    // on left channel 
+                        true,                    // on left channel
                         true,                    // and on right channel
                         TLV320_FILTER_BIQUAD_B,  // using BiQuadB filter
-                        &filter)) {              // pointer to filter settings
+                        &filterB)) {             // pointer to filter settings
     halt("Failed to set BiQuadB filter!");
   }
+  
   if (!dac.setDACFilter(true,                    // enable filtering
-                        true,                    // on left channel 
+                        true,                    // on left channel
                         true,                    // and on right channel
                         TLV320_FILTER_BIQUAD_C,  // using BiQuadC filter
-                        &filter)) {              // pointer to filter settings
+                        &filterC)) {             // pointer to filter settings
     halt("Failed to set BiQuadC filter!");
-  }  
-
-  // Configure DAC path - now power up both left and right DACs
-  if (!dac.setDACDataPath(true, true,                      // Power up both DACs
-                          TLV320_DAC_PATH_NORMAL,          // Normal left path
-                          TLV320_DAC_PATH_NORMAL,          // Normal right path
-                          TLV320_VOLUME_STEP_1SAMPLE)) {   // Step: 1 per sample
-    halt("Failed to configure DAC data path!");
   }
 
-  // Route DAC output to headphone
-  if (!dac.configureAnalogInputs(TLV320_DAC_ROUTE_MIXER,   // Left DAC to mixer
-                                 TLV320_DAC_ROUTE_MIXER,   // Right DAC to mixer
-                                 false, false, false,      // No AIN routing
-                                 false)) {                 // No HPL->HPR
-    halt("Failed to configure DAC routing!");
-  }
-                                
-  // DAC Volume Control
-  if (!dac.setDACVolumeControl(
-        false, false, TLV320_VOL_INDEPENDENT) ||   // Unmute both channels
-      !dac.setChannelVolume(false, -2) ||           // Left DAC -2dB
-      !dac.setChannelVolume(true, -2)) {            // Right DAC -2dB
-    halt("Failed to configure DAC volumes!");
+  // filter coeffs are written, now power up DACs
+  if (!dac.powerOnDAC(true, true)) {
+    halt("Failed to power up DACs!");
   }
 
-  // Headphone & Speaker Setup
-  if (!dac.configureHeadphoneDriver(
-        true, true,                           // Power up both drivers
-        TLV320_HP_COMMON_1_65V,               // Default common mode
-        false) ||                             // Don't power down on SCD
-      !dac.configureHPL_PGA(0, true) ||       // Set HPL gain (0-9dB), unmute
-      !dac.configureHPR_PGA(0, true) ||       // Set HPR gain (0-9dB), unmute
-      !dac.setHPLVolume(true, 20) ||          // Enable and set HPL volume: -10dB
-      !dac.setHPRVolume(true, 20)) {          // Enable and set HPR volume: -10dB
-    halt("Failed to configure headphone outputs!");
+  // activating headphone output and setting headphone volume
+  if (!dac.initHeadphoneOutput(true,                // enable headphone output
+                               false,               // HP(L/R) output driver acts as headphone driver
+                               70)) {               // set volume (allowed range: 0(quiet)...127(loud))
+    halt("Failed to configure headphone output!");
   }
 
-  if (!dac.enableSpeaker(true) ||                 // Disable/Enable speaker amps
-      !dac.configureSPK_PGA(TLV320_SPK_GAIN_6DB,  // Set gain to 6dB
-                            true) ||              // Unmute
-      !dac.setSPKVolume(true, 20)) {              // Enable and set volume to -10dB
+  // activating speaker output and setting speaker volume
+  if (!dac.initSpeakerOutput(true,                // enable speaker output
+                             90)) {               // set volume (allowed range: 0(quiet)...127(loud))
     halt("Failed to configure speaker output!");
   }
   Serial.println("TLV320 DAC config done!");
@@ -227,8 +189,8 @@ void setup() {
 
   xTaskCreate(backgroundTask, "bgTask", 4096, NULL, 1, NULL);
   delay(100);
-  
-  // The adaptive mode gets enabled with I2S bus already active and DACs powered up.
+
+  // adaptive mode gets enabled with I2S bus already active and DACs powered up
   dac.setAdaptiveMode(true);
 }
 
@@ -239,17 +201,19 @@ void loop() {
   if (Serial.read(buf, sizeof(buf))) {
     if (*buf == 'e') {                // enable filtering on left and right channel
       Serial.println("---> enable low pass filtering");
-      if (!dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_A, &filter) ||
-          !dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_B, &filter) ||
-          !dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_C, &filter)) {
+      // if (!dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_A, &filter)) {
+      if (!dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_A, &filterA) ||
+          !dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_B, &filterB) ||
+          !dac.setDACFilter(true, true, true, TLV320_FILTER_BIQUAD_C, &filterC)) {
         Serial.println("Failed to enable filtering !");
       }
-    }                       
+    }
     else if (*buf == 'd') {           // disable filtering on left and right channel
       Serial.println("---> disable low pass filtering");
-      if (!dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_A, NULL) ||
-          !dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_B, NULL) ||
-          !dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_C, NULL)) {
+      // if (!dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_A, NULL)) {
+      if (!dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_A) ||
+          !dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_B) ||
+          !dac.setDACFilter(false, true, true, TLV320_FILTER_BIQUAD_C)) {
         Serial.println("Failed to disable filtering !");
       }
     }

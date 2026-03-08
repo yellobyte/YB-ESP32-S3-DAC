@@ -70,7 +70,7 @@ void setup() {
   cfg.dac_gain_right = 5.0;              // allowed range: -63.5...+24.0 dB
 
   if (!dac.initDAC(&cfg)) {
-    halt("Failed to initialize DAC core!");
+    halt(dac.getLastError().c_str());
   }
 
   // only processing block PRB_P25 (RC12) contains the Beep generator

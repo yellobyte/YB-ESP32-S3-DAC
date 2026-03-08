@@ -50,7 +50,7 @@ void setup() {
   //cfg.dac_gain_right = -15.0;                // allowed range: -63.5...+24.0 dB
 
   if (!dac.initDAC(&cfg)) {
-    halt("Failed to initialize DAC core!");
+    halt(dac.getLastError().c_str());
   }
 
   // activating headphone output and setting headphone volume

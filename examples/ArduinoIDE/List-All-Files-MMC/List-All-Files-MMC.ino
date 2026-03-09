@@ -59,8 +59,6 @@ void setup()
   Serial.println("running example \"List-All-Files-MMC\":");
   Serial.print("mounting SD card...");
 
-  // The SD_MMC default definitions for MOSI(SD_MMC: CMD), SCK & MISO(SD_MMC: D0) are 11, 12 & 13 
-  // (see pins_arduino.h for more info)
   SD_MMC.setPins(SCK, MOSI, MISO);
   if (!SD_MMC.begin("/sdcard", true)) {
     Serial.println("error!");

@@ -1,5 +1,5 @@
 /*
-  Treble Shelf Filter (4th order)
+  BiQuad Treble Shelf Filter (4th order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 50Hz...5000Hz.
   The TLV320DAC3101 Stereo Audio DAC has two cascaded BiQuad Treble Shelf filter blocks with

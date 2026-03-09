@@ -1,5 +1,5 @@
 /*
-  IIR (1st order) Low Pass Filter
+  IIR Low Pass Filter (1st order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 50Hz...8kHz.
   The TLV320DAC3101 Stereo Audio DAC has an IIR (1st order) low pass filter activated on

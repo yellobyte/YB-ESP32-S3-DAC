@@ -1,5 +1,5 @@
 /*
-  BiQuad Low Pass Filter (of 6th order)
+  BiQuad Low Pass Filter (6th order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 50Hz...5kHz.
   The TLV320DAC3101 Stereo Audio DAC has three BiQuad (2nd order) low pass filters cascaded

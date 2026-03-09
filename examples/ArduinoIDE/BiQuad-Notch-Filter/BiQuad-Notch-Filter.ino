@@ -1,5 +1,5 @@
 /*
-  BiQuad Notch Filter (2nd order filter)
+  BiQuad Notch Filter (2nd order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 1200Hz...1700Hz.
   The TLV320DAC3101 Stereo Audio DAC has a single BiQuad notch filters activated with a center

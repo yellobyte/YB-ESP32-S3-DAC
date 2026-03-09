@@ -1,5 +1,5 @@
 /*
-  BiQuad (2nd order) EQ Filter
+  BiQuad EQ Filter (2nd order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 200Hz...2500Hz.
   The TLV320DAC3101 Stereo Audio DAC has a BiQuad EQ filter with fc=1.5kHz, bandwidth

@@ -1,5 +1,5 @@
 /*
-  BiQuad High Pass Filter (of 4th order)
+  BiQuad High Pass Filter (4th order)
 
   An ESP32 background thread is feeding the TLV320 with a sine tone sweep 50Hz...5kHz.
   The TLV320DAC3101 Stereo Audio DAC has two cascaded BiQuad (2nd order) high pass filters

@@ -20,7 +20,7 @@
   MUX). However, both can get pinned to any available GPIO pin if needed but
   will be slower if routed through GPIO Matrix
 
-  Last updated 2026-01-04, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
 */
 
 #include "FS.h"
@@ -64,9 +64,7 @@ void setup() {
   Serial.println();
   Serial.println("Running example \"List-All-Files-SD\":");
 
-  // the FSPI default definitions for SS, MOSI, SCK & MISO are 10, 11, 12 & 13
-  // (see pins_arduino.h for more info)
-  spi_onboardSD->begin();
+  spi_onboardSD->begin(SCK, MISO, MOSI, SS);
 
   Serial.print("trying to mount SD in onboard microSD card slot...");
   if (!SD.begin(SS, *spi_onboardSD)) {

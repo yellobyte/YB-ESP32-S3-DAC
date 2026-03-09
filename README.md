@@ -1,13 +1,15 @@
 ## YB-ESP32-S3-DAC Development Board Overview:
 The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32-S3 MCU with **Stereo Headphone** and **Stereo Speaker** output. It features an **ESP32-S3-WROOM-1-N8R2** module (8MB Flash, 2MB PSRAM, WiFi PCB antenna) and will be available soon on sales platforms [eBay](https://www.ebay.de/sch/i.html?_nkw=yb-esp32-s3) and [Ricardo.ch](https://www.ricardo.ch/en/s/YB-ESP32-S3).
 
-The board is packed with features. It provides a **Texas Instruments TLV320 Stereo Audio DAC** with audio processing capability and integrated **Stereo Class-D Speaker Amplifier**, **3.5mm Stereo Headset Socket**, **microSD** card slot, **CH334 USB-Hub** chip, **CH343 USB-UART bridge** chip, **USB-C connector** for software upload, serial output and/or feeding power to the board, **two status LEDs** and lots of **GPIO pins** for free use.  
+The board is packed with features. It provides a **Texas Instruments TLV320 Stereo Audio DAC** with audio processing capability and integrated **Stereo Class-D Speaker Amplifier**, **3.5mm stereo audio jack**, **microSD** card slot, **CH334 USB-Hub** chip, **CH343 USB-UART bridge** chip, **USB-C connector** for software upload, serial output and/or feeding power to the board, **two status LEDs** and lots of **GPIO pins** for free use.  
 
 <p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_top.jpg" height="160"/></p>  
 
-For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more.  
+For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more. 
 
-You can connect additional hardware to the board, e.g. TFT displays, IR receivers or any other module that communicates via I2C/SPI, etc. Please have a look at the provided [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) for PlatformIO resp. ArduinoIDE. 
+Since the TLV320DAC3101 chip features sophisticated audio processing capabilities you can implement various types of audio filters, enable dynamic range compression (DRC) or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) has been created especially for this board. Lots of examples come with it.
+
+Of course, you can connect additional hardware to the board, e.g. TFT displays, IR receivers or any other module that communicates via I2C/SPI, etc. Please have a look at the provided [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) for PlatformIO resp. ArduinoIDE. 
 
 The densly populated YB-ESP32-S3-DAC board provides multiple GPIO pins and is still highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board. 
 

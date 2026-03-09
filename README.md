@@ -7,7 +7,7 @@ The board is packed with features. It provides a **Texas Instruments TLV320 Ster
 
 For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more. 
 
-Since the TLV320DAC3101 chip features sophisticated audio processing capabilities you can implement various types of audio filters, enable dynamic range compression (DRC) or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) has been created especially for this board. Lots of examples come with it.
+Since the TLV320DAC3101 chip features sophisticated **audio processing capabilities** you can implement various types of audio filters, enable dynamic range compression (DRC) or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) has been created especially for this board. Lots of examples come with it.
 
 Of course, you can connect additional hardware to the board, e.g. TFT displays, IR receivers or any other module that communicates via I2C/SPI, etc. Please have a look at the provided [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) for PlatformIO resp. ArduinoIDE. 
 

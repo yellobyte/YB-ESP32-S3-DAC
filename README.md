@@ -3,7 +3,7 @@ The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32
 
 The board is packed with features. It provides a **Texas Instruments TLV320 Stereo Audio DAC** with audio processing capability and integrated **Stereo Class-D Speaker Amplifier**, **3.5mm stereo audio jack**, **microSD** card slot, **CH334 USB-Hub** chip, **CH343 USB-UART bridge** chip, **USB-C connector** for software upload, serial output and/or feeding power to the board, **two status LEDs** and lots of **GPIO pins** for free use.  
 
-<p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_top.jpg" height="160"/></p>  
+<p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_top.jpg" height="180"/></p>  
 
 For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more. 
 

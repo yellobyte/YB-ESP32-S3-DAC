@@ -3,14 +3,14 @@
     and their titles are played back via the ESP32-audioI2S library.
 
     Unlike most implementations, the SdFatFS library is used here instead of the SD or SD_MMC libs.
-    
+
     The following Arduino Libraries are needed:
      - TLV320DAC3101 (>= V1.2.0.)
      - Adafruit TLV320 I2S
      - SdFat
      - ESP32-audioI2S  (https://github.com/schreibfaul1/ESP32-audioI2S.git)
      - SdFatFS (https://github.com/anp59/SdFatFS.git)
-     
+
     The SdFatFS library implements the functions of the Arduino FS interface based on the SdFat solution from Greimann
     (https://github.com/greiman/SdFat) and can therefore be used as an alternative to the SD or SD_MMC libraries
     in order to use additional SdFat functionalities in projects.
@@ -31,10 +31,9 @@
         's' sets speaker on/off
 
     Note: As when using the SD library, the SD card must be operated with SdFatFS via SPI.
-    When using the YB-ESP32-S3-DAC board from yellobyte (https://github.com/yellobyte/YB-ESP32-S3-DAC)
-    the solder bridge SD_CS must be closed [default].
+    When using the YB-ESP32-S3-DAC board the solder bridge SD_CS must be closed [default].
 
-    Last updated 2026-03-13, anp59
+    2026-03-13, anp59
 */
 
 #include <Arduino.h>
@@ -78,7 +77,7 @@ bool f_eof = true;
 
 void setup() {
     Serial.begin(115200);
-    // SPI CLK 50 MHZ was successfully tested with the YB-ESP32-S3-DAC board. 
+    // SPI CLK 50 MHZ was successfully tested with the YB-ESP32-S3-DAC board.
     // If problems occur, the CLK frequency should be reduced to 25 or 16 MHz.
     if ( !SDF.begin(SdSpiConfig(SS, DEDICATED_SPI, SD_SCK_MHZ(50), &SD_SPI)) ) {
         log_e("Card Mount failed!");
@@ -175,7 +174,7 @@ void loop() {
         if ( !isCmd ) {
             String s(c);
             s += Serial.readString();
-                offset = s.toInt();
+            if ( c != ' ') offset = s.toInt();
         }
         if ( !isCmd ) {
             audio.stopSong();

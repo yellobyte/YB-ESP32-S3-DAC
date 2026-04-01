@@ -7,9 +7,9 @@ The 4-layer board is packed with features. It provides a **Texas Instruments TLV
 
 For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more. 
 
-Since the TLV320DAC3101 chip features sophisticated **audio processing capabilities** you can implement various types of audio filters, enable dynamic range compression (DRC) or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) has been created especially for this board. Lots of examples come with it.
+Since the TLV320DAC3101 chip features sophisticated **audio processing capabilities** you can implement various types of audio filters, enable dynamic range compression (DRC), generate a 3D effect or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) provides everything needed with lots of examples.
 
-Of course, you can connect additional hardware to the board, e.g. TFT displays, IR receivers or any other module that communicates via I2C/SPI, etc. Please have a look at the provided [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) for PlatformIO resp. ArduinoIDE. 
+Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more.  
 
 The densly populated YB-ESP32-S3-DAC board provides multiple GPIO pins and is still highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board. 
 

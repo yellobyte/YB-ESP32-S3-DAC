@@ -11,7 +11,7 @@ Since the TLV320DAC3101 chip features sophisticated **audio processing capabilit
 
 Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more.  
 
-The densly populated YB-ESP32-S3-DAC board provides multiple GPIO pins and is still highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board. 
+The board is highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board. 
 
 ## YB-ESP32-S3-DAC board features in detail:
 - **ESP32-S3-WROOM-1-N8R2** module with 8MB Flash, 2MB PSRAM, WiFi PCB antenna

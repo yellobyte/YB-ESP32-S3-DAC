@@ -5,13 +5,22 @@ The 4-layer board is packed with features. It provides a **Texas Instruments TLV
 
 <p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_top.jpg" height="200"/></p>  
 
-For a quick start **connect a 8Ω loudspeaker** or a **headphone** to the board, apply power, build and upload an example and off you go. You quickly can listen to **internet radio stations**, **play audio files from microSD card** and much more. 
-
 Since the TLV320DAC3101 chip features sophisticated **audio processing capabilities** you can implement various types of audio filters, enable dynamic range compression (DRC), generate a 3D effect or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) provides everything needed and lots of examples.
 
 Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more.  
 
 The board is highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board. 
+
+## Quickstart guide:  
+**All YB-ESP32-S3-DAC boards delivered have already been flashed with software example 'Play-All-MP3-Files-on-SD'.**  
+
+- Step 1) connect one or two 8Ω loudspeaker(s) or a headphone to the board
+- Step 2) insert a microSD card (FAT32) holding some *.mp3 files
+- Step 3) apply power (via USB or 5V pins)
+
+That's it. The status LED will light up when the microSD card has been detected ok and the board will start playing all *.mp3 files found.
+
+In a second step you could build and upload one of the many provided ArduinoIDE/PlatformIO [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) and listen to **internet radio stations**, try out the **3D sound effect**, apply **low/high pass audio filters** and much more. 
 
 ## YB-ESP32-S3-DAC board features in detail:
 - **ESP32-S3-WROOM-1-N8R2** module with 8MB Flash, 2MB PSRAM, WiFi PCB antenna
@@ -154,7 +163,3 @@ Its easy. Folder [doc](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/do
 
 <p align="center"><img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-s3-dac.jpg" height="250"/>&nbsp;<img src="https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/Eagle_project_with_yb-esp32-s3-dac2.jpg" height="250"/></p> 
 
-## Final Remark for first use:  
-**>>> All YB-ESP32-S3-DAC boards delivered have already been flashed with software example 'Play-All-MP3-Files-on-SD'. <<<**  
-
-For a quick board test just insert a microSD card (FAT32) into the socket holding some *.mp3 files, connect one (or two) speaker(s) or a headphone to the board and power it up (via USB or 5V pins). The status LED will light up when the microSD card has been detected successfully and the board will start playing all *.mp3 files found.

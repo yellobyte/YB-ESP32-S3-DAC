@@ -22,7 +22,7 @@ The board is highly [**breadboard compatible**](https://github.com/yellobyte/YB-
 
 That's it. The status LED will light up when the microSD card has been detected ok and the board will start playing all *.mp3 files found.
 
-In a second step you could build and upload one of the many provided ArduinoIDE/PlatformIO [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) and listen to **internet radio stations**, try out the **3D sound effect**, apply **low/high pass audio filters** and much more.
+Carrying on you could build and upload one of the many provided ArduinoIDE/PlatformIO [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) and listen to **internet radio stations**, try out the **3D sound effect**, apply **low/high pass audio filters** and much more.
 
 ## YB-ESP32-S3-DAC board features in detail:
 - **ESP32-S3-WROOM-1-N8R2** module with 8MB Flash, 2MB PSRAM, WiFi PCB antenna

@@ -25,7 +25,7 @@ That's it. The status LED will light up when the microSD card has been detected 
 Carrying on you could build and upload one of the many provided ArduinoIDE/PlatformIO [examples](https://github.com/yellobyte/YB-ESP32-S3-DAC/tree/main/examples) and listen to **internet radio stations**, try out the **3D sound effect**, apply **low/high pass audio filters** and much more.
 
 ## YB-ESP32-S3-DAC board features in detail:
-- **ESP32-S3-WROOM-1-N8R2** module with 8MB Flash, 2MB PSRAM, WiFi PCB antenna
+- **ESP32-S3-WROOM-1** module with 16MB Flash/2MB PSRAM (-N16R8) or 8MB Flash/2MB PSRAM (-N8R2), WiFi PCB antenna
 - **TLV320DAC3101 Stereo Audio DAC** with audio processing capability (audio filters of 1st and 2nd order, dynamic range compression DRC), Stereo Class-D Speaker Amplifier (2 x 1.3W@8Ω) and Stereo Headphone output (2 x 65mW@16Ω impedance min.). The DAC is connected to the ESP32-S3 as follows:
   - Via I2C for DAC configuration & programming (I2C address 0x18):
     - *GPIO8 - SDA* (data line)

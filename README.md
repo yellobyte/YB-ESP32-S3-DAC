@@ -1,5 +1,5 @@
 ## YB-ESP32-S3-DAC Development Board Overview:
-The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32-S3 MCU with **Stereo Headphone** and **Stereo Speaker** output. It features an **ESP32-S3-WROOM-1-N8R2** module (8MB Flash, 2MB PSRAM, WiFi PCB antenna) and is available on sales platforms [eBay](https://www.ebay.de/sch/i.html?_nkw=yb-esp32-s3) and [Ricardo.ch](https://www.ricardo.ch/en/s/YB-ESP32-S3). **Please note:** As of today (10.05.2026) all DAC boards have already been sold out due to unexpected high demand. They will be available again around 18.05.2026.
+The **YB-ESP32-S3-DAC** is an audio development board based on Espressif's ESP32-S3 MCU with **Stereo Headphone** and **Stereo Speaker** output. It features an **ESP32-S3-WROOM-1-N8R2** module (8MB Flash, 2MB PSRAM, WiFi PCB antenna) and is available on sales platforms [eBay](https://www.ebay.de/sch/i.html?_nkw=yb-esp32-s3) and [Ricardo.ch](https://www.ricardo.ch/en/s/YB-ESP32-S3). **Please note:** As of today (10.05.2026) all DAC boards have already sold out due to unexpected high demand. They will be available again soon.
 
 The 4-layer board is packed with features. It provides a **Texas Instruments TLV320 Stereo Audio DAC** with audio processing capability and integrated **Stereo Class-D Speaker Amplifier**, **3.5mm stereo audio jack**, **microSD** card slot, **CH334 USB-Hub** chip, **CH343 USB-UART bridge** chip, **USB-C connector** for software upload, serial output, JTAG debugging and/or feeding power to the board, **two status LEDs** and lots of **GPIO pins** for free use.
 
@@ -9,7 +9,7 @@ Since the TLV320DAC3101 chip features sophisticated **audio processing capabilit
 
 Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more.
 
-The onboard USB-Hub (USB high-speed HUB controller chip CH334) allows for **JTAG debugging and watching serial output simultaneously** without any problems. More info further down.
+The onboard USB-Hub (USB high-speed HUB controller chip CH334) allows for **JTAG debugging and watching serial output simultaneously** without interferences. More info further down.
 
 The board is highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board.
 
@@ -72,13 +72,22 @@ Each speaker channel produces max. 1.3W output power at 8Ω. If your project re
 The board uses a WCH chip CH343P (USB-UART bridge). If you haven't done yet then you need to install the CH343 Driver on your Laptop/PC. For Windows go [here](https://www.wch-ic.com/search?t=all&q=ch343) and download and install the newest version of the driver. Linux provides CH34x drivers by default.
 
 ### Arduino IDE:
-As of Arduino ESP32 Core V3.3.6 you open the board list, enter "yb" and then select "**Yellobyte YB-ESP32-S3-DAC**". Now choose the proper settings for COM port, debug level, etc. as shown below. Be aware, since the ESP32-S3 MCU is very versatile there are a lot of build options to play with. Espressif's homepage offers some help.
+As of Arduino ESP32 Core V3.3.6 you open the board list, enter "yb" and select "**Yellobyte YB-ESP32-S3-DAC**". Then choose the proper settings for COM port, debug level, etc. as shown below. Be aware, since the ESP32-S3 MCU is very versatile there are a lot of build options to play with. Espressif's homepage offers some help.
 
-Correct **ArduinoIDE** settings for the **YB-ESP32-S3-DAC** board:
+Correct **settings** for boards with 16MB Flash & 8MB PSRAM (**-N16R8**):
+- Board: *YB-ESP32-S3-DAC*
+- USB CDC On Boot: _Disabled_
+- Flash Size: *16MB (128Mb)*
+- Partition Scheme: e.g. *16MB with spiffs (...)*, *8MB with spiffs (...)*, *Default 4MB with spiffs (...)*, etc.
+- PSRAM: *OPI PSRAM*
+
+ ![](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_ArduinoIDE-Settings-N16R8.jpg)
+
+Correct **settings** for boards with 8MB Flash & 2MB PSRAM (**-N8R2**):
 - Board: *YB-ESP32-S3-DAC*
 - USB CDC On Boot: _Disabled_
 - Flash Size: *8MB (64Mb)*
-- Partition Scheme: *8MB with spiffs (...)*
+- Partition Scheme: e.g. *8MB with spiffs (...)*, *Default 4MB with spiffs (...)*, etc.
 - PSRAM: *QSPI PSRAM*
 
  ![](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_ArduinoIDE-Settings-N8R2.jpg)

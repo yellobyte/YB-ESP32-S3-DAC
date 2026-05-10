@@ -81,7 +81,7 @@ Correct **ArduinoIDE** settings for the **YB-ESP32-S3-DAC** board:
 - Partition Scheme: *8MB with spiffs (...)*
 - PSRAM: *QSPI PSRAM*
 
- ![](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_ArduinoIDE-Settings.jpg)
+ ![](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_ArduinoIDE-Settings-N8R2.jpg)
 
 
 ### PlatformIO:

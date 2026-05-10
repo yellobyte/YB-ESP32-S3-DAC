@@ -7,7 +7,7 @@ The 4-layer board is packed with features. It provides a **Texas Instruments TLV
 
 Since the TLV320DAC3101 chip features sophisticated **audio processing capabilities** you can implement various types of audio filters, enable dynamic range compression (DRC), generate a 3D effect or use the integrated beep generator. The Arduino library [TLV320DAC3101](https://github.com/yellobyte/TLV320DAC3101) provides everything needed and lots of examples.
 
-Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more.
+Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more. The **I2S bus signals** (**D**ata, **L**eft/**R**ight (word) clock, **B**it clock) are accessible via **solder pads** on the bottom of the board for attaching external I2S components if needed.
 
 The onboard USB-Hub (USB high-speed HUB controller chip CH334) allows for **JTAG debugging and watching serial output simultaneously** without interference. More info further down.
 
@@ -26,7 +26,7 @@ Carrying on you could build and upload one of the many provided ArduinoIDE/Platf
 
 ## YB-ESP32-S3-DAC board features in detail:
 - **ESP32-S3-WROOM-1** module with 16MB Flash/2MB PSRAM (-N16R8) or 8MB Flash/2MB PSRAM (-N8R2), WiFi PCB antenna
-- **TLV320DAC3101 Stereo Audio DAC** with audio processing capability (audio filters of 1st and 2nd order, dynamic range compression DRC), Stereo Class-D Speaker Amplifier (2 x 1.3W@8Ω) and Stereo Headphone output (2 x 65mW@16Ω impedance min.). The DAC is connected to the ESP32-S3 as follows:
+- **TLV320DAC3101 Stereo Audio DAC** with audio processing capability (audio filters of 1st and 2nd order, dynamic range compression DRC, 3D effect), Stereo Class-D Speaker Amplifier (2 x 1.3W@8Ω) and Stereo Headphone output (2 x 65mW@16Ω impedance min.). The DAC is connected to the ESP32-S3 as follows:
   - Via I2C for DAC configuration & programming (I2C address 0x18):
     - *GPIO8 - SDA* (data line)
     - *GPIO9 - SCL* (clock line)

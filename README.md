@@ -94,7 +94,7 @@ Correct **settings** for boards with 8MB Flash & 2MB PSRAM (**-N8R2**):
 
 
 ### PlatformIO:
-Building with **PlatformIO** is easy as well. Starting with Arduino ESP32 Core v3.3.6 the VSCode/PlatformIO IDE holds the necessary *.json board file which provides the correct board definitions & settings.
+Building with **PlatformIO** is easy as well. Starting with Arduino ESP32 Core v3.3.6 the VSCode/PlatformIO IDE holds the necessary *.json board file which provides default board definitions & settings.
 
 Just create a new project and give it a name, then go to board selection, enter "yb-" and choose your YB-ESP32-S3-*** board from the list that is popping up.
 

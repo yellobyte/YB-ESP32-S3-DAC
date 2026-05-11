@@ -103,16 +103,16 @@ Just create a new project and give it a name, then go to board selection, enter 
 **Important:**  
 1.) If the WROOM module features 16MB flash memory, add the following lines to the *platformio.ini* project file's respective **[env]** section to account for the 16MB flash available. Otherwise you are restricted to 8MB (as set in the *.json board file).  
 ```
-...  
-board_build.partitions = default_16MB.csv  
-board_upload.flash_size = 16MB  
-board_upload.maximum_size = 16777216*  
-...  
+...
+board_build.partitions = default_16MB.csv
+board_upload.flash_size = 16MB
+board_upload.maximum_size = 16777216
+...
 ```
-2.) If the WROOM module features >= 8MB PSRAM then it needs:  
+2.) If the WROOM module features >= 8MB PSRAM then it needs:
 ```
-...  
-board_build.arduino.memory_type = qio_opi  
+...
+board_build.arduino.memory_type = qio_opi
 ...
 ```
 

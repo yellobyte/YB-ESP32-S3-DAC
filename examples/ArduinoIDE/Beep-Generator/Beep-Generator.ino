@@ -9,7 +9,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-07-14, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -36,14 +36,10 @@ void backgroundTask(void *parameter) {
   digitalWrite(LED_BUILTIN, HIGH); // status LED On
   while (true) {
     for (uint32_t i = 0; i < sizeof(audioFile); i += 2) {
-      uint8_t sample_low8bit = audioFile[i],
-              sample_high8bit = audioFile[i + 1];
-      // left channel, low 8 bits first
-      i2s.write(sample_low8bit);
-      i2s.write(sample_high8bit);
-      // right channel, low 8 bits first
-      i2s.write(sample_low8bit);
-      i2s.write(sample_high8bit);
+      // left channel
+      i2s.write((uint8_t *)&audioFile[i], 2);
+      // right channel
+      i2s.write((uint8_t *)&audioFile[i], 2);
     }
   }
   vTaskDelete(NULL); // will never get here

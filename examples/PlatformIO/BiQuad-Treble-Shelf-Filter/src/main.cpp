@@ -19,7 +19,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-07-14, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -70,12 +70,10 @@ void backgroundTask(void *parameter) {
     for (uint32_t i = 0; i < maxSamples; ++i) {
       pos = uint16_t(pos + delta) % (uint16_t)WAV_SIZE;
       int16_t sample = waveform[pos];
-      // left channel, low 8 bits first
-      i2s.write((uint8_t)sample);
-      i2s.write((uint8_t)(sample >> 8));
-      // right channel, low 8 bits first
-      i2s.write((uint8_t)sample);
-      i2s.write((uint8_t)(sample >> 8));
+      // left channel
+      i2s.write((uint8_t *)&sample, sizeof(sample));
+      // right channel
+      i2s.write((uint8_t *)&sample, sizeof(sample));
     }
     frequency += fdelta;           // set new frequency
     if (frequency <= FREQU_MIN || frequency >= FREQU_MAX) {

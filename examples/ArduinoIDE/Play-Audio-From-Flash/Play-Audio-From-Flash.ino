@@ -9,7 +9,7 @@
    - Adafruit_BusIO
    - TLV320DAC3101
 
-  Last updated 2026-03-08, ThJ <yellobyte@bluewin.ch>
+  Last updated 2026-07-14, ThJ <yellobyte@bluewin.ch>
 */
 
 #include <Arduino.h>
@@ -77,12 +77,10 @@ void setup() {
 
 void loop() {
   for (uint32_t i = 0; i < sizeof(audioFile); i += 2) {
-    // left channel, low 8 bits first
-    i2s.write(audioFile[i]);
-    i2s.write(audioFile[i + 1]);
-    // right channel, low 8 bits first
-    i2s.write(audioFile[i]);
-    i2s.write(audioFile[i + 1]);
+    // left channel
+    i2s.write((uint8_t *)&audioFile[i], 2);
+    // right channel
+    i2s.write((uint8_t *)&audioFile[i], 2);
   }
   //vTaskDelay(1);
 }

@@ -38,6 +38,7 @@ Carrying on you could build and upload one of the many provided ArduinoIDE/Platf
 
   Note: GPIOs 5/6/7 are not wired to a board pin, however they are available via labeled solder pins on the bottom of the board.
  - **JST PH2.0 connectors** for easy connecting 2 loudspeakers (8Ω impedance, left & right audio channels)
+ - **3.5mm stereo audio jack** acting as stereo headphone output (16Ω min., microphone input, button press detection) or stereo line output (10kΩ nom.)
  - **microSD** card slot connected to the ESP32-S3 via fast SPI bus *FSPI*:
    - *GPIO10 - SCS* (SPI bus control, chip select, this control line is not needed for SD_MMC-lib and available for other usage when solder bridge *SD_CS* is open [default closed])
    - *GPIO11 - MOSI* (SPI bus data communication, SD_MMC calls it *CMD*)

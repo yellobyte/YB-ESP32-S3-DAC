@@ -1,0 +1,34 @@
+--- Terminal on COM8 | 115200 8-N-1
+--- Available filters and text transformations: debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
+--- More details at https://bit.ly/pio-monitor-filters
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+00:12:10.991 > ESP-ROM:esp32s3-20210327
+00:12:10.991 > Build:Mar 27 2021
+00:12:10.991 > rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+00:12:10.991 > SPIWP:0xee
+00:12:10.991 > mode:DIO, clock div:1
+00:12:10.991 > load:0x3fce2820,len:0x10cc
+00:12:10.991 > load:0x403c8700,len:0xc2c
+00:12:10.991 > load:0x403cb700,len:0x30b0
+00:12:10.991 > entry 0x403c88b8
+00:12:11.238 > [    13][I][esp32-hal-psram.c:106] psramAddToHeap(): PSRAM added to the heap.
+00:12:11.357 > 
+00:12:11.358 > Example "headset detection" is running:
+00:12:11.363 > [   133][I][esp32-hal-i2c-ng.c:112] i2cInit(): Initializing I2C Master: num=0 sda=8 scl=9 freq=100000
+00:12:11.450 > TLV320 DAC config done!
+00:12:32.159 > New status value: 0x03 - Headset with mic detected
+00:12:32.164 > New IRQ flag value: 0x10
+00:12:32.165 >  - Headset insertion or removal detected
+00:12:35.423 > New IRQ flag value: 0x20
+00:12:35.424 >  - Headset button pressed
+00:12:37.973 > New status value: 0x00 - Headset removed
+00:12:37.977 > New IRQ flag value: 0x10
+00:12:37.978 >  - Headset insertion or removal detected
+00:12:56.741 > New status value: 0x03 - Headset with mic detected
+00:12:56.746 > New IRQ flag value: 0x10
+00:12:56.747 >  - Headset insertion or removal detected
+00:12:59.699 > New IRQ flag value: 0x20
+00:12:59.700 >  - Headset button pressed
+00:13:01.943 > New status value: 0x00 - Headset removed
+00:13:01.948 > New IRQ flag value: 0x10
+00:13:01.948 >  - Headset insertion or removal detected

@@ -48,15 +48,10 @@ void setup() {
     halt("Failed to configure headphone output!");
   }
 
-  // activate speaker output and set speaker volume
-  if (!dac.configSpeakerOutput(true,                // speaker output enabled
-                               100)) {              // set volume (allowed range: 0(quiet)...127(loud))
-    halt("Failed to configure speaker output!");
-  }
-
   // headphone detection setup
   if (!dac.configMicBias(false,                       // disable power down
                          true,                        // always on
+                         // correct bias voltage depends on the model of the used headset microphone:
                          //TLV320_MICBIAS_2V) ||        // MICBIAS voltage = 2V
                          TLV320_MICBIAS_2_5V) ||      // MICBIAS voltage = 2.5V
                          //TLV320_MICBIAS_AVDD) ||      // MICBIAS voltage = AVDD

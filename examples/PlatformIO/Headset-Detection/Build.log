@@ -1,7 +1,7 @@
 Executing task: C:\Users\tj\.platformio\penv\Scripts\platformio.exe run 
 
 Processing release (platform: https://github.com/pioarduino/platform-espressif32/releases/download/stable/platform-espressif32.zip; framework: arduino; board: yb_esp32s3_dac)
------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
 Verbose mode can be enabled via `-v, --verbose` option
 CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/yb_esp32s3_dac.html
 PLATFORM: Espressif 32 (55.3.311) > YelloByte YB-ESP32-S3-DAC
@@ -105,7 +105,7 @@ Retrieving maximum program size .pio\build\release\firmware.elf
 Checking size .pio\build\release\firmware.elf
 Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
 RAM:   [=         ]   7.1% (used 23252 bytes from 327680 bytes)
-Flash: [=         ]   9.9% (used 330983 bytes from 3342336 bytes)
+Flash: [=         ]   9.9% (used 330263 bytes from 3342336 bytes)
 Building .pio\build\release\firmware.bin
 esptool v5.3.0
 Creating ESP32-S3 image...
@@ -118,9 +118,9 @@ Creating binary "firmware.factory.bin" with:
  -  0xe000   | boot_app0.bin
  -  0x10000  | firmware.bin
 Successfully created combined binary image.
-====================================================== [SUCCESS] Took 46.44 seconds ======================================================
+================================================== [SUCCESS] Took 48.47 seconds ==================================================
 
 Environment    Status    Duration
 -------------  --------  ------------
-release        SUCCESS   00:00:46.443
-======================================================= 1 succeeded in 00:00:46.443 =======================================================
+release        SUCCESS   00:00:48.471
+================================================== 1 succeeded in 00:00:48.471 ==================================================

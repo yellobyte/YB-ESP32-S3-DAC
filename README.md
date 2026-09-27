@@ -9,7 +9,7 @@ Since the TLV320DAC3101 chip features sophisticated **audio processing capabilit
 
 Due to the many available GPIOs you can connect additional hardware to the board, e.g. TFT displays, rotary encoders, IR receivers, modules that communicates via I2C/SPI and much more. The **I2S bus signals** (**D**ata, **L**eft/**R**ight (word) clock, **B**it clock) are accessible via **solder pads** on the bottom of the board for attaching external I2S components if needed.
 
-The onboard USB-Hub (USB high-speed HUB controller chip CH334) allows for **JTAG debugging and watching serial output simultaneously** without interference. More info further down.
+The onboard USB-Hub (USB high-speed HUB controller chip CH334) allows for simultaneous **JTAG debugging** and **serial output**. More info further down.
 
 The board is highly [**breadboard compatible**](https://github.com/yellobyte/YB-ESP32-S3-DAC/raw/main/doc/YB-ESP32-S3-DAC_on_breadboard.jpg) for it leaves one row of accessible breadboard contacts on either side of the board. All I/O ports (GPIOx) are clearly labeled on both sides of the board.
 

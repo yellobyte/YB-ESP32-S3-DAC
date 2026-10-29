@@ -127,7 +127,7 @@ Device "USB JTAG/serial debug unit" lets you simultaneously debug the board via 
 **Please note:** The PlatformIO builder scripts (*.json) for modules containing ESP32-S3/C3 normally define the build flag _ARDUINO_USB_MODE=1_. This enables the USB-Serial-JTAG controller and disables the USB-OTG-Controller in the ESP32-S3. If you want to override it you can (re-)define it in your platformio.ini control file. Normally you don't have to worry about it.
 
 ### Software Upload to the board:
-Uploading new software to boards with your IDE is a breeze. Select the correct COM port and upload the program. The integrated hardware logic will put the board into upload mode automatically.
+Uploading new software to boards with your IDE is a breeze. Select the correct COM port and upload the program. The [integrated hardware logic](https://github.com/yellobyte/ESP32-DevBoards-Getting-Started/tree/main/reset_and_software_upload) will put the board into upload mode automatically.
 
 However, at any time and if needed you can force the ESP32-S3 into upload mode *manually*. Keep the **'B'** button pressed, then press/release the **'R'** button and finally release the **'B'** button. The serial monitor output will subsequently confirm the boards readiness for getting flashed.
 
